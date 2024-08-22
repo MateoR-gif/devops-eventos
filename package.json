@@ -1,0 +1,22 @@
+{
+  "name": "devops-eventos",
+  "version": "1.0.0",
+  "description": "API Simple Eventos",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MateoR-gif/devops-eventos.git"
+  },
+  "author": "Mateo Rendón",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MateoR-gif/devops-eventos/issues"
+  },
+  "homepage": "https://github.com/MateoR-gif/devops-eventos#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

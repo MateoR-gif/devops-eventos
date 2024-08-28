@@ -7,6 +7,10 @@ const uri =
 
 const userRoutes = require("./routes/users");
 
+// Middleware para parsear el cuerpo de las solicitudes
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 async function startServer() {
   try {
     await mongoose.connect(uri);

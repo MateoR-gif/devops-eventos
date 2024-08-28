@@ -2,8 +2,8 @@ const User = require('../models/user');
 
 class UserDAO {
   async create(userData) {
-    const User = new User(userData);
-    return await User.save();
+    const newUser = new User(userData);
+    return await newUser.save();
   }
 
   async getAll() {

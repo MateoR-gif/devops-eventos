@@ -7,8 +7,9 @@ const app = express();
 app.use(express.json());
 
 //rutas de pruebas
-app.get("/users", userController.getUsers);
+app.get("/users", userController.getUsers)
 app.post("/users", userController.createUser)
+app.put("/users/:id", userController.updateUser)
 
 //Mock del DAO
 jest.mock("../dao/userDao");
@@ -43,5 +44,15 @@ describe("User Controller", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockUsers);
+  });
+
+  it('should update a user by ID', async () => {
+    const mockUser = { name: 'John Doe', email: 'john@example.com', password: '123456' };
+    userDAO.update.mockResolvedValue(mockUser);
+
+    const response = await request(app).put('/users/1').send({ name: 'John Updated' });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(mockUser);
   });
 });

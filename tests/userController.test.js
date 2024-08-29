@@ -7,11 +7,11 @@ const app = express();
 app.use(express.json());
 
 //rutas de pruebas
-app.get("/users", userController.getUsers)
-app.get('/users/:id', userController.getById);
-app.post("/users", userController.createUser)
-app.put("/users/:id", userController.updateUser)
-app.delete('/users/:id', userController.deleteUser);
+app.get("/users", userController.getUsers);
+app.get("/users/:id", userController.getById);
+app.post("/users", userController.createUser);
+app.put("/users/:id", userController.updateUser);
+app.delete("/users/:id", userController.deleteUser);
 
 //Mock del DAO
 jest.mock("../dao/userDao");
@@ -48,31 +48,51 @@ describe("User Controller", () => {
     expect(response.body).toEqual(mockUsers);
   });
 
-  it('should update a user by ID', async () => {
-    const mockUser = { name: 'John Doe', email: 'john@example.com', password: '123456' };
-    userDAO.update.mockResolvedValue(mockUser);
+  it("should return a user by ID", async () => {
+    const mockUser = {
+      name: "John Doe",
+      email: "john@example.com",
+      password: "123456",
+    };
+    userDAO.getById.mockResolvedValue(mockUser);
 
-    const response = await request(app).put('/users/1').send({ name: 'John Updated' });
+    const response = await request(app).get("/users/1");
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockUser);
   });
 
-  it('should delete a user by ID', async () => {
-    userDAO.delete.mockResolvedValue(true);
+  it("should update a user by ID", async () => {
+    const mockUser = {
+      name: "John Doe",
+      email: "john@example.com",
+      password: "123456",
+    };
+    userDAO.update.mockResolvedValue(mockUser);
 
-    const response = await request(app).delete('/users/1');
+    const response = await request(app)
+      .put("/users/1")
+      .send({ name: "John Updated" });
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'Usuario eliminado' });
+    expect(response.body).toEqual(mockUser);
   });
 
-  it('should return 404 if user not found', async () => {
+  it("should delete a user by ID", async () => {
+    userDAO.delete.mockResolvedValue(true);
+
+    const response = await request(app).delete("/users/1");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ message: "Usuario eliminado" });
+  });
+
+  it("should return 404 if user not found", async () => {
     userDAO.getById.mockResolvedValue(null);
 
-    const response = await request(app).get('/users/1');
+    const response = await request(app).get("/users/1");
 
     expect(response.status).toBe(404);
-    expect(response.body).toEqual({ message: 'Usuario no encontrado' });
+    expect(response.body).toEqual({ message: "Usuario no encontrado" });
   });
 });

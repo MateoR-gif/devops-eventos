@@ -10,6 +10,7 @@ app.use(express.json());
 app.get("/users", userController.getUsers)
 app.post("/users", userController.createUser)
 app.put("/users/:id", userController.updateUser)
+app.delete('/users/:id', userController.deleteUser);
 
 //Mock del DAO
 jest.mock("../dao/userDao");
@@ -54,5 +55,14 @@ describe("User Controller", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockUser);
+  });
+
+  it('should delete a user by ID', async () => {
+    userDAO.delete.mockResolvedValue(true);
+
+    const response = await request(app).delete('/users/1');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ message: 'Usuario eliminado' });
   });
 });

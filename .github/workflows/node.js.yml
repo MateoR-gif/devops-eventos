@@ -67,5 +67,5 @@ jobs:
 
     - name: Push Docker image
       run: |
-        docker tag my-api-image:latest ${{ secrets.DOCKER_USERNAME }}/my-api-image:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/my-api-image:latest
+        docker tag eventos-devops:latest ${{ secrets.DOCKER_USERNAME }}/eventos-devops:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/eventos-devops:latest

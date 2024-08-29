@@ -8,6 +8,7 @@ app.use(express.json());
 
 //rutas de pruebas
 app.get("/users", userController.getUsers)
+app.get('/users/:id', userController.getById);
 app.post("/users", userController.createUser)
 app.put("/users/:id", userController.updateUser)
 app.delete('/users/:id', userController.deleteUser);
@@ -64,5 +65,14 @@ describe("User Controller", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ message: 'Usuario eliminado' });
+  });
+
+  it('should return 404 if user not found', async () => {
+    userDAO.getById.mockResolvedValue(null);
+
+    const response = await request(app).get('/users/1');
+
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ message: 'Usuario no encontrado' });
   });
 });

@@ -13,7 +13,7 @@ RUN npm install
 # Copia el resto del código de la aplicación al directorio de trabajo
 COPY . .
 
-# Expone el puerto en el que tu aplicación estará escuchando
+# Expone el puerto donde la aplicación estará escuchando
 EXPOSE 8000
 
 # Comando para ejecutar la aplicación

@@ -25,7 +25,7 @@ describe("User Controller", () => {
     const mockUser = {
       name: "John Doe",
       email: "john@example.com",
-      password: "123456",
+      password: "1234567",
     };
     userDAO.create.mockResolvedValue(mockUser);
 
